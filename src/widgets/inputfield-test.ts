@@ -1,9 +1,7 @@
 import { Widget } from './widget-test';
-import { EnableInterface } from './enable.interface';
 import { InputableInterface } from './inputable.interface';
 
-export class InputField extends Widget implements EnableInterface, InputableInterface {
-
+export class InputField extends Widget implements InputableInterface {
 
 	public async clear() {
 		await this.elem.clear();
