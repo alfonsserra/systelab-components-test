@@ -6,12 +6,12 @@
 
 # systelab-components-test
 
-Library with Systelab Components test tools.
+Library with test tools for [systelab-components](https://github.com/systelab/systelab-components) based applications.
 
 ## Installing the library
 
 ```bash
-npm install systelab-comonents-test --save
+npm install systelab-components-test --save
 ```
 
 ## Working with the repo
