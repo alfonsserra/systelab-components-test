@@ -1,0 +1,32 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+  - '10'
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+      - google-chrome-beta
+
+before_install:
+  - npm i -g makeshift && makeshift -s @systelab-tecnologies -r https://registry.npmjs.org
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+install:
+  - npm install -g codecov
+  - npm install -g codacy-coverage
+  - npm install
+
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: aserra@werfen.com
+  api_key: $NPM_TOKEN
+  on:
+    tags: true

@@ -1,0 +1,40 @@
+{
+  "name": "systelab-components-test",
+  "version": "1.0.10",
+  "license": "MIT",
+  "description": "Widgets to be use in the E2E Tests based in Protractor",
+  "keywords": [
+    "Angular",
+    "Angular-cli",
+    "NPM",
+    "Systelab"
+  ],
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "private": false,
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "publish": "npm run build && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/systelab/systelab-components-test.git"
+  },
+  "dependencies": {
+    "core-js": "^2.5.6",
+    "tslib": "^1.10.0",
+    "protractor": "^5.4.2",
+    "karma-jasmine": "^2.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.2",
+    "ts-node": "^6.2.0",
+    "@types/core-js": "^0.9.42",
+    "@types/jasmine": "~2.5.53",
+    "@types/jasminewd2": "^2.0.6",
+    "@types/node": "^6.0.116"
+  }
+}
