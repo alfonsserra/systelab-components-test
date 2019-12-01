@@ -1,6 +1,5 @@
 import { Widget } from './widget-test';
 import { by, ElementArrayFinder } from 'protractor';
-import { ComboBoxItem } from './combobox-item-test';
 
 export class ComboBox extends Widget {
 
@@ -8,14 +7,20 @@ export class ComboBox extends Widget {
 		await this.elem.click();
 	}
 
-	public async getPage(): Promise<Array<ComboBoxItem>> {
-		let content: ComboBoxItem[] = [];
+	public async getOptions(): Promise<Array<string>> {
+		let content: string[] = [];
 		let rows: ElementArrayFinder = this.elem.all(by.css('.ag-cell-value'));
 		let numberOfItems: number = await rows.count();
 		for (let i = 0; i < numberOfItems; i++) {
-			await content.push(new ComboBoxItem(rows.get(i)));
+			let text: string = await rows.get(i).getText();
+			content.push(text);
 		}
 		return content;
 	}
+
+	public async selectOption(i: number): Promise<void> {
+		await this.elem.all(by.css('.ag-cell-value')).get(i).click();
+	}
+
 }
 
