@@ -21,6 +21,10 @@ export class SystelabDialogTest extends Widget {
 			.element(by.className('slab-dialog-close'));
 	}
 
+	public async back() {
+		await this.getButtonClose().click();
+	}
+
 	public getButtonByName(name: string): Button {
 		return new Button(this.elem
 			.element(by.buttonText(name)));

@@ -1,8 +1,9 @@
 import { browser, ElementArrayFinder, ElementFinder } from 'protractor';
 import { JSConsole } from './js-console';
 import { BasePage } from '../page-objects/base-page';
-import { Widget } from '..';
+import { SystelabDialogTest, Widget } from '..';
 import { FormInputElement } from '../services/form-input-element.model';
+import { FormButtonElement } from '../services';
 
 declare const allure: any;
 
@@ -114,6 +115,36 @@ export class TestUtil {
 				.toEqual(true, desc + ' should be displayed'); };
 
 		await this.doIt2(expectation, false, 'Widget is Present', obj, desc);
+	}
+
+
+	public static async checkDialogTitleAndButtons(page: SystelabDialogTest, expectedTitle: string, buttons?: FormButtonElement[]) {
+		await TestUtil.checkWidgetPresentAndDisplayed(page,expectedTitle);
+		await TestUtil.checkText(page.getTitle(), 'Window title', expectedTitle);
+		if (buttons) {
+			await this.checkButtons(page, buttons);
+		}
+	}
+
+	public static async checkButtons(page: SystelabDialogTest, buttons: FormButtonElement[]):Promise<void> {
+		await allure.createStep('Action: Review the button name and status:' + JSON.stringify(buttons), async () => {
+
+			await TestUtil.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
+
+			for(let button of buttons.filter((b) => b.exist)) {
+				await TestUtil.checkBoolean(page.getButtonByName(button.name).isPresent(), `Button ${button.name} is present`);
+			}
+
+			for(let button of buttons.filter((b) => b.exist && b.enable)) {
+				await TestUtil.checkBoolean(page.getButtonByName(button.name).isEnabled(), `Button ${button.name} is enabled`);
+			}
+
+			for(let button of buttons.filter((b) => b.exist && !b.enable)) {
+				await TestUtil.checkBoolean(page.getButtonByName(button.name).isDisabled(), `Button ${button.name} is disabled`);
+			}
+			await allure.createStep('The buttons are in the correct status', () => {
+			})();
+		})();
 	}
 
 	private static async doIt2(expectation: (x,y) => any, verbose, text, param1, param2): Promise<void> {
