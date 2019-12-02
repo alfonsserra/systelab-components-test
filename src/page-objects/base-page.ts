@@ -19,4 +19,8 @@ export class BasePage {
     public async isDisplayed(): Promise<boolean> {
         return await this.current.isDisplayed();
     }
+
+    public async waitToBePresent(): Promise<boolean> {
+        return await this.current.isPresent() && await this.current.isDisplayed();
+    }
 }

@@ -28,4 +28,8 @@ export class Widget {
 	public byId(id: string): ElementFinder {
 		return this.elem.element(by.id((id)));
 	}
+
+	public async waitToBePresent(): Promise<boolean> {
+		return await this.elem.isPresent() && await this.elem.isDisplayed();
+	}
 }
