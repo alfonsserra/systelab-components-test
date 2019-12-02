@@ -10,8 +10,8 @@ export class MesssagePopupPage extends Widget {
         super(element.all(by.tagName('mp-modal-container')).element(by.tagName('dialog-view')));
     }
 
-    public getTextMessage() {
-        return this.elem.element(by.id('popup-message'));
+    public async getTextMessage() {
+        return await this.elem.element(by.id('popup-message')).getText();
     }
 
     public getButtonYes(): Button {

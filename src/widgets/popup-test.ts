@@ -8,8 +8,8 @@ export class Popup extends Widget {
 		return await this.elem.getText();
 	}
 
-	private async getButton(text: string) {
-		return await new Button(this.elem
+	private getButton(text: string) {
+		return new Button(this.elem
 			.element(by.tagName('systelab-dialog-bottom'))
 			.element(by.buttonText(text)));
 	}

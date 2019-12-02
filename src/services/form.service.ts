@@ -8,59 +8,57 @@ declare const allure: any;
 
 export class FormService {
 
-	public static checkDialogTitleAndButtons(page: SystelabDialogTest, expectedTitle: string, buttons?: FormButtonElement[]) {
-		TestUtil.checkWidgetPresentAndDisplayed(page,expectedTitle);
-		TestUtil.checkText(page.getTitle(), 'Window title', expectedTitle);
+	public static async checkDialogTitleAndButtons(page: SystelabDialogTest, expectedTitle: string, buttons?: FormButtonElement[]) {
+		await TestUtil.checkWidgetPresentAndDisplayed(page,expectedTitle);
+		await TestUtil.checkText(page.getTitle(), 'Window title', expectedTitle);
 		if (buttons) {
-			FormService.checkButtons(page, buttons);
+			await FormService.checkButtons(page, buttons);
 		}
 	}
 
-	public static removeValuesInForm(form: FormInputElement[], name: string) {
-		allure.createStep('Action: Remove all values in form ' + name, () => {
-			form.forEach((input) => {
-				this.clearField(input.field);
-			});
+	public static async removeValuesInForm(form: FormInputElement[], name: string) {
+		await allure.createStep('Action: Remove all values in form ' + name, async () => {
+			for (let input of form) {
+				await this.clearField(input.field);
+			}
 		})();
 	}
 
-	public static fillForm(form: FormInputElement[], name: string) {
-		allure.createStep('Action: Fill form ' + name, () => {
-			form.forEach((input) => {
-				input.field.setText(input.value);
-				TestUtil.checkText(input.field.getText(), 'Field "' + input.name + '" in form "' + name + '" should be ' + input.value, input.value, false);
-			});
+	public static async fillForm(form: FormInputElement[], name: string):Promise<void> {
+		await allure.createStep('Action: Fill form ' + name, async () => {
+			for (let input of form) {
+				await input.field.setText(input.value);
+				await TestUtil.checkText(input.field.getText(), 'Field "' + input.name + '" in form "' + name + '" should be ' + input.value, input.value, false);
+			}
 		})();
 	}
 
-	public static clearField(widget: InputableInterface) {
-		widget.clear();
+	public static async clearField(widget: InputableInterface):Promise<void> {
+		await widget.clear();
 	}
 
-	public static fillField(widget: InputableInterface, name: string, value: string) {
-		allure.createStep('Action: Fill ' + name + ' with value ' + value, () => {
-			widget.setText(value);
+	public static async fillField(widget: InputableInterface, name: string, value: string):Promise<void> {
+		await allure.createStep('Action: Fill ' + name + ' with value ' + value, async () => {
+			await widget.setText(value);
 		})();
 	}
 
-	public static checkButtons(page: SystelabDialogTest, buttons: FormButtonElement[]) {
-		allure.createStep('Action: Review the button name and status:' + JSON.stringify(buttons), () => {
+	public static async checkButtons(page: SystelabDialogTest, buttons: FormButtonElement[]):Promise<void> {
+		await allure.createStep('Action: Review the button name and status:' + JSON.stringify(buttons), async () => {
 
-			TestUtil.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
+			await TestUtil.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
+			for(let button of buttons) {
+					await TestUtil.checkBoolean(page.getButtonByName(button.name).isPresent(), `Button ${button.name} is present`);
+			}
 
-			buttons.forEach((buttonElem) => {
-				TestUtil.checkBoolean(page.getButtonByName(buttonElem.name).isPresent(), `Button ${buttonElem.name} is present`);
-			});
+			for(let button of buttons.filter((b) => b.enable)) {
+					await TestUtil.checkBoolean(page.getButtonByName(button.name).isEnabled(), `Button ${button.name} is enabled`);
+			}
 
-			buttons.filter((b) => b.enable)
-				.forEach((buttonElem) => {
-					TestUtil.checkBoolean(page.getButtonByName(buttonElem.name).isEnabled(), `Button ${buttonElem.name} is enabled`);
-				});
-			buttons.filter((b) => !b.enable)
-				.forEach((buttonElem) => {
-					TestUtil.checkBoolean(page.getButtonByName(buttonElem.name).isDisabled(), `Button ${buttonElem.name} is disabled`);
-				});
-			allure.createStep('The buttons are in the correct status', () => {
+			for(let button of buttons.filter((b) => !b.enable)) {
+					await TestUtil.checkBoolean(page.getButtonByName(button.name).isDisabled(), `Button ${button.name} is disabled`);
+			}
+			await allure.createStep('The buttons are in the correct status', () => {
 			})();
 		})();
 	}

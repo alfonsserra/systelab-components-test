@@ -13,7 +13,7 @@ export class TestUtil {
 	public static init(tms: string, feature: string, version: string, user: string) {
 		allure.addLabel('tms', tms);
 		allure.addLabel('feature', feature);
-		browser.driver.getCapabilities()
+		let capabilities = browser.driver.getCapabilities()
 			.then((caps) => {
 				browser.browserName = caps.get('browserName');
 				allure.addLabel('browser', browser.browserName);
@@ -28,120 +28,121 @@ export class TestUtil {
 		this.console.clear();
 	}
 
-	public static hasErrorsInConsole() {
-		return this.console.hasErrors();
+	public static async hasErrorsInConsole():Promise<boolean> {
+		return await this.console.hasErrors();
 	}
 
-	public static checkNumber(n: Promise<number>, name: string, expectedCount: number, verbose = true) {
-		let expectation = (n, name, expectedCount) => expect(n)
+	public static async checkNumber(n: Promise<number>, name: string, expectedCount: number, verbose = true): Promise<void> {
+		let expectation = async (n, name, expectedCount) => await expect(n)
 			.toEqual(expectedCount, 'Count "' + name + '" should be ' + expectedCount)
-		this.doIt3(expectation, verbose, name + ' is equals to ' + expectedCount, n, name, expectedCount);
+		await this.doIt3(expectation, verbose, name + ' is equals to ' + expectedCount, n, name, expectedCount);
 	}
 
-	public static checkBoolean(n: Promise<boolean>, name: string, verbose = true) {
-		let expectation = (n, name) => expect(n).toBeTruthy(name)
-		this.doIt2(expectation, verbose, name, n, name);
+	public static async checkBoolean(n: Promise<boolean>, name: string, verbose = true): Promise<void> {
+		let expectation = async (n, name) => await expect(n).toBeTruthy(name)
+		await this.doIt2(expectation, verbose, name, n, name);
 	}
 
-	public static checkText(text: Promise<string>, name: string, expectedText: string, verbose = true) {
-		let expectation = (text, name, expectedText) =>expect(text)
+	public static async checkText(text: Promise<string>, name: string, expectedText: string, verbose = true): Promise<void> {
+		let expectation = async (text, name, expectedText) =>await expect(text)
 			.toEqual(expectedText, 'Field "' + name + '" should be ' + expectedText);
-		this.doIt3(expectation, verbose, name + ' is equals to' + expectedText, text, name, expectedText);
+		await this.doIt3(expectation, verbose, name + ' is equals to' + expectedText, text, name, expectedText);
 	}
 
-	public static checkForm(form: FormInputElement[], name: string, verbose = true) {
-		let expectation =(form, name)=>form.forEach((item) => {
-			expect(item.field.getText())
-				.toEqual(item.value, 'Field "' + item.name + '" in form "' + name + '" should be ' + item.value);
-		});
-		this.doIt2(expectation, verbose, 'Check data in form ' + name, form, name);
+	public static async checkForm(form: FormInputElement[], name: string, verbose = true): Promise<void> {
+		let expectation =async (form, name)=>{
+			for(let item of form) {
+				await expect(item.field.getText()).toEqual(item.value, 'Field "' + item.name + '" in form "' + name + '" should be ' + item.value);
+			}
+		};
+		await this.doIt2(expectation, verbose, 'Check data in form ' + name, form, name);
 	}
 
-	public static checkIsPresent(field: ElementFinder, name: string, verbose = true) {
+	public static async checkIsPresent(field: ElementFinder, name: string, verbose = true): Promise<void> {
 
-		let expectation = (field, name) => expect(field.isPresent())
+		let expectation = async (field, name) => await expect(field.isPresent())
 			.toEqual(true, name + ' is present');
-		this.doIt2(expectation, verbose, name + ' is present', field, name);
+		await this.doIt2(expectation, verbose, name + ' is present', field, name);
 	}
 
-	public static checkIsNoPresent(field: ElementFinder, name: string, verbose = true) {
+	public static async checkIsNoPresent(field: ElementFinder, name: string, verbose = true): Promise<void> {
 
-		let expectation = (field, name) => expect(field.isPresent())
+		let expectation = async (field, name) => await expect(field.isPresent())
 			.toEqual(false, name + ' is not present');
-		this.doIt2(expectation, verbose, name + ' is not present', field, name);
+		await this.doIt2(expectation, verbose, name + ' is not present', field, name);
 	}
 
-	public static checkIsEnabled(field: ElementFinder, name: string, verbose = true) {
+	public static async checkIsEnabled(field: ElementFinder, name: string, verbose = true): Promise<void> {
 
-		let expectation = (field, name) => expect(field.isEnabled())
+		let expectation = async (field, name) => await expect(field.isEnabled())
 			.toEqual(true, name + ' is enabled');
-		this.doIt2(expectation, verbose, name + ' is enabled', field, name);
+		await this.doIt2(expectation, verbose, name + ' is enabled', field, name);
 	}
 
-	public static checkIsDisabled(field: ElementFinder, name: string, verbose = true) {
+	public static async checkIsDisabled(field: ElementFinder, name: string, verbose = true): Promise<void> {
 
-		let expectation = (field, name) => expect(field.isEnabled())
+		let expectation = async (field, name) => await expect(field.isEnabled())
 			.toEqual(null, name + ' is disabled');
-		this.doIt2(expectation, verbose, name + ' is disabled', field, name);
+		await this.doIt2(expectation, verbose, name + ' is disabled', field, name);
 	}
 
-	public static checkAttribute(field: ElementFinder, attributeName: string, name: string, expectedValue: string, verbose = true) {
-		let expectation = (field, attributeName, name, expectedValue)=>expect(field.getAttribute(attributeName))
+	public static async checkAttribute(field: ElementFinder, attributeName: string, name: string, expectedValue: string, verbose = true): Promise<void> {
+		let expectation = async (field, attributeName, name, expectedValue)=> await expect(field.getAttribute(attributeName))
 			.toEqual(expectedValue, 'Attribute: "' + attributeName + '" of Field: "' + name + '" should be ' + expectedValue);
-		this.doIt4(expectation, verbose, 'Attribute: "' + attributeName + '" of Field: "' + name + '" is equal ' + expectedValue, field, attributeName, name, expectedValue);
+		await this.doIt4(expectation, verbose, 'Attribute: "' + attributeName + '" of Field: "' + name + '" is equal ' + expectedValue, field, attributeName, name, expectedValue);
 	}
 
-	public static checkDisableAttribute(field: ElementFinder, name: string, expectedValue: string, verbose = true) {
-		let expectation = (field, name, expectedValue )=>expect(field.getAttribute('disabled'))
+	public static async checkDisableAttribute(field: ElementFinder, name: string, expectedValue: string, verbose = true): Promise<void> {
+		let expectation = async (field, name, expectedValue )=>await expect(field.getAttribute('disabled'))
 			.toEqual(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
-		this.doIt3(expectation, verbose, 'Field "' + name + '" is disabled is equal ' + expectedValue, field, name, expectedValue);
+		await this.doIt3(expectation, verbose, 'Field "' + name + '" is disabled is equal ' + expectedValue, field, name, expectedValue);
 	}
 
-	public static checkPageIsPresentAndDisplayed(page: BasePage) {
-		expect(page.isPresent())
+	public static async checkPageIsPresentAndDisplayed(page: BasePage): Promise<void> {
+		await expect(page.isPresent())
 			.toEqual(true, 'Window should be present on the DOM');
-		expect(page.isDisplayed())
+		await expect(page.isDisplayed())
 			.toEqual(true, 'Window should be displayed');
 	}
 
-	public static checkWidgetPresentAndDisplayed(obj: Widget, desc: string)
+	public static async checkWidgetPresentAndDisplayed(obj: Widget, desc: string): Promise<void>
 	{
-		let expectation = (obj,desc)=> {
-			expect(obj.isPresent())
+		let expectation = async (obj,desc)=> {
+			await expect(obj.isPresent())
 				.toEqual(true, desc + ' should be present on the DOM');
-			expect (obj.isDisplayed())
+			await expect (obj.isDisplayed())
 				.toEqual(true, desc + ' should be displayed'); };
 
-		this.doIt2(expectation, false, 'Widget is Present', obj, desc);
+		await this.doIt2(expectation, false, 'Widget is Present', obj, desc);
 	}
 
-	private static doIt2(expectation: (x,y) => any, verbose, text, param1, param2) {
+	private static async doIt2(expectation: (x,y) => any, verbose, text, param1, param2): Promise<void> {
 		if (verbose) {
-			allure.createStep(text, () => {
-				expectation(param1, param2);
+			await allure.createStep(text, async () => {
+				await expectation(param1, param2);
 			})();
 		} else {
-			expectation(param1, param2);
+			await expectation(param1, param2);
 		}
 	}
 
-	private static doIt3(expectation: (x,y,z) => any, verbose, text, param1, param2, param3) {
+	private static async doIt3(expectation: (x,y,z) => any, verbose, text, param1, param2, param3): Promise<void> {
 		if (verbose) {
-			allure.createStep(text, () => {
-				expectation(param1, param2, param3);
+			await allure.createStep(text, async () => {
+				await expectation(param1, param2, param3);
 			})();
 		} else {
-			expectation(param1, param2, param3);
+			await expectation(param1, param2, param3);
 		}
 	}
 
-	private static doIt4(expectation: (x,y,z,k) => any, verbose, text, param1, param2, param3, param4) {
+	private static async doIt4(expectation: (x,y,z,k) => any, verbose, text, param1, param2, param3, param4): Promise<void> {
 		if (verbose) {
-			allure.createStep(text, () => {
-				expectation(param1, param2, param3, param4);
+			await allure.createStep(text, async () => {
+				await expectation(param1, param2, param3, param4);
 			})();
 		} else {
-			expectation(param1, param2, param3, param4);
+			await expectation(param1, param2, param3, param4);
 		}
 	}
 }
