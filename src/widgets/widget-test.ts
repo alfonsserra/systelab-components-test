@@ -29,7 +29,11 @@ export class Widget {
 		return this.elem.element(by.id((id)));
 	}
 
-	public async waitToBePresent(): Promise<boolean> {
+	/**
+	 * Utility to wait until the Page is present and displayed
+	 * @param {Widget} obj
+	 */
+	public async wait(): Promise<boolean> {
 		return await this.elem.isPresent() && await this.elem.isDisplayed();
 	}
 }

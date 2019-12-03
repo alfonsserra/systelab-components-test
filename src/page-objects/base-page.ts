@@ -12,15 +12,12 @@ export class BasePage {
         return this.current;
     }
 
-    public async isPresent(): Promise<boolean> {
-        return await this.current.isPresent();
-    }
-
-    public async isDisplayed(): Promise<boolean> {
-        return await this.current.isDisplayed();
-    }
-
-    public async waitToBePresent(): Promise<boolean> {
+    /**
+     * Utility to wait until the Page is present and displayed
+     * @param {BasePage} obj
+     */
+    public async wait(): Promise<boolean> {
         return await this.current.isPresent() && await this.current.isDisplayed();
     }
+
 }

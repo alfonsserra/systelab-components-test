@@ -1,7 +1,6 @@
-import { browser, ElementArrayFinder, ElementFinder } from 'protractor';
+import { browser, ElementFinder } from 'protractor';
 import { JSConsole } from './js-console';
-import { BasePage } from '../page-objects/base-page';
-import { SystelabDialogTest, Widget } from '..';
+import { SystelabDialogTest } from '..';
 import { FormInputElement } from '../services/form-input-element.model';
 import { FormButtonElement } from '../services';
 
@@ -99,21 +98,8 @@ export class Check {
 		await this.doIt3(expectation, verbose, 'Field "' + name + '" is disabled is equal ' + expectedValue, field, name, expectedValue);
 	}
 
-	/**
-	 * Utility to wait until the Widget or the Page is present and displayed
-	 * @param {Widget or BasePage} obj
-	 */
-	public static async wait(obj: (Widget | BasePage)): Promise<void>
-	{
-		let expectation = async (obj,desc)=> {
-			await expect(obj.isPresent())
-				.toEqual(true, desc + ' should be present on the DOM');
-			await expect (obj.isDisplayed())
-				.toEqual(true, desc + ' should be displayed'); };
-	}
-
 	public static async checkDialogTitleAndButtons(page: SystelabDialogTest, expectedTitle: string, buttons?: FormButtonElement[]) {
-		await this.wait(page);
+		await page.wait();
 		await this.checkText(page.getTitle(), 'Window title', expectedTitle);
 		if (buttons) {
 			await this.checkButtons(page, buttons);
