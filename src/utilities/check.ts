@@ -7,7 +7,7 @@ import { FormButtonElement } from '../services';
 
 declare const allure: any;
 
-export class TestUtil {
+export class Check {
 
 	private static console = new JSConsole();
 
@@ -99,28 +99,22 @@ export class TestUtil {
 		await this.doIt3(expectation, verbose, 'Field "' + name + '" is disabled is equal ' + expectedValue, field, name, expectedValue);
 	}
 
-	public static async checkPageIsPresentAndDisplayed(page: BasePage): Promise<void> {
-		await expect(page.isPresent())
-			.toEqual(true, 'Window should be present on the DOM');
-		await expect(page.isDisplayed())
-			.toEqual(true, 'Window should be displayed');
-	}
-
-	public static async checkWidgetPresentAndDisplayed(obj: Widget, desc: string): Promise<void>
+	/**
+	 * Utility to wait until the Widget or the Page is present and displayed
+	 * @param {Widget or BasePage} obj
+	 */
+	public static async wait(obj: (Widget | BasePage)): Promise<void>
 	{
 		let expectation = async (obj,desc)=> {
 			await expect(obj.isPresent())
 				.toEqual(true, desc + ' should be present on the DOM');
 			await expect (obj.isDisplayed())
 				.toEqual(true, desc + ' should be displayed'); };
-
-		await this.doIt2(expectation, false, 'Widget is Present', obj, desc);
 	}
 
-
 	public static async checkDialogTitleAndButtons(page: SystelabDialogTest, expectedTitle: string, buttons?: FormButtonElement[]) {
-		await TestUtil.checkWidgetPresentAndDisplayed(page,expectedTitle);
-		await TestUtil.checkText(page.getTitle(), 'Window title', expectedTitle);
+		await this.wait(page);
+		await this.checkText(page.getTitle(), 'Window title', expectedTitle);
 		if (buttons) {
 			await this.checkButtons(page, buttons);
 		}
@@ -129,18 +123,18 @@ export class TestUtil {
 	public static async checkButtons(page: SystelabDialogTest, buttons: FormButtonElement[]):Promise<void> {
 		await allure.createStep('Action: Review the button name and status:' + JSON.stringify(buttons), async () => {
 
-			await TestUtil.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
+			await Check.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
 
 			for(let button of buttons.filter((b) => b.exist)) {
-				await TestUtil.checkBoolean(page.getButtonByName(button.name).isPresent(), `Button ${button.name} is present`);
+				await Check.checkBoolean(page.getButtonByName(button.name).isPresent(), `Button ${button.name} is present`);
 			}
 
 			for(let button of buttons.filter((b) => b.exist && b.enable)) {
-				await TestUtil.checkBoolean(page.getButtonByName(button.name).isEnabled(), `Button ${button.name} is enabled`);
+				await Check.checkBoolean(page.getButtonByName(button.name).isEnabled(), `Button ${button.name} is enabled`);
 			}
 
 			for(let button of buttons.filter((b) => b.exist && !b.enable)) {
-				await TestUtil.checkBoolean(page.getButtonByName(button.name).isDisabled(), `Button ${button.name} is disabled`);
+				await Check.checkBoolean(page.getButtonByName(button.name).isDisabled(), `Button ${button.name} is disabled`);
 			}
 			await allure.createStep('The buttons are in the correct status', () => {
 			})();
