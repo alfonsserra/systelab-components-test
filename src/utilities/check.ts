@@ -46,7 +46,7 @@ export class Check {
 	public static async checkText(text: Promise<string>, name: string, expectedText: string, verbose = true): Promise<void> {
 		let expectation = async (text, name, expectedText) =>await expect(text)
 			.toEqual(expectedText, 'Field "' + name + '" should be ' + expectedText);
-		await this.doIt3(expectation, verbose, name + ' is equals to' + expectedText, text, name, expectedText);
+		await this.doIt3(expectation, verbose, name + ' is equals to ' + expectedText, text, name, expectedText);
 	}
 
 	public static async checkForm(form: FormInputElement[], name: string, verbose = true): Promise<void> {
