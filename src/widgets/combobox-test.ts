@@ -18,7 +18,7 @@ export class ComboBox extends Widget {
 		return content;
 	}
 
-	public async selectOption(i: number): Promise<void> {
+	public async selectOptionByNumber(i: number): Promise<void> {
 		await this.elem.all(by.css('.ag-cell-value')).get(i).click();
 	}
 
