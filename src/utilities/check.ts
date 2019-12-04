@@ -1,6 +1,6 @@
 import { browser, ElementFinder } from 'protractor';
 import { JSConsole } from './js-console';
-import { SystelabDialogTest } from '..';
+import { SystelabDialogTest, Tabs } from '..';
 import { FormInputElement } from '../services/form-input-element.model';
 import { FormButtonElement } from '../services';
 
@@ -124,7 +124,7 @@ export class Check {
 			for(let button of buttons) {
 				if (button.exist) {
 					await Check.checkBoolean(page.getButtonByName(button.name).isPresent(), `Button ${button.name} is present`, false);
-					expectedTxt += (expectedTxt === '' ? '':', ') + button.name;
+					expectedTxt += (expectedTxt === '' ? 'Buttons: ':', ') + button.name;
 					if (button.enable) {
 						await Check.checkBoolean(page.getButtonByName(button.name).isEnabled(), `Button ${button.name} is enabled`, false);
 						expectedTxt += ' is enabled';
@@ -138,6 +138,15 @@ export class Check {
 				await allure.createStep(expectedTxt, () => {
 				})();
 			}
+	}
+
+	public static async checkTabs(tabs: Tabs, expectedTabTitles:string[]):Promise<void> {
+		await Check.checkNumber(tabs.getNumberOfTabs(), 'Number of tabs', expectedTabTitles.length);
+		for (let i = 0 ; i < expectedTabTitles.length; i++) {
+			await Check.checkText(tabs.getTab(i).getText(), `Tab ${expectedTabTitles[i]} is present`, expectedTabTitles[i], false);
+		}
+		await allure.createStep('Tabs: ' + expectedTabTitles.toString(), () => {
+		})();
 	}
 
 	private static async doIt2(expectation: (x,y) => any, verbose, text, param1, param2): Promise<void> {
