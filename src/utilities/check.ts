@@ -60,7 +60,7 @@ export class Check {
 		})();
 	}
 
-	public static async checkArray(texts: Promise<string[]>, expectedTexts: [], actionName: string, verbose = true): Promise<void> {
+	public static async checkArray(texts: Promise<string[]>, expectedTexts: string[], actionName: string, verbose = true): Promise<void> {
 		if (verbose) {
 			allure.createStep(`Action: Review the ` + actionName + `: [${expectedTexts}]"`, () => {})();
 		}
