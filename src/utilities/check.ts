@@ -62,11 +62,11 @@ export class Check {
 
 	public static async checkArray(texts: Promise<string[]>, expectedTexts: string[], actionName: string, verbose = true): Promise<void> {
 		if (verbose) {
-			allure.createStep(`Action: Review the ` + actionName + `: [${expectedTexts}]"`, () => {})();
+			await allure.createStep(`Action: Review the ` + actionName + `: [${expectedTexts}]"`, async () => {})();
 		}
-		expect(texts).toEqual(expectedTexts);
+		await expect(texts).toEqual(expectedTexts);
 		if (verbose) {
-			allure.createStep('It works as intended', () => {})();
+			await allure.createStep('It works as intended', async () => {})();
 		}
 	}
 
