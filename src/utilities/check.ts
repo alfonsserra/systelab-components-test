@@ -50,12 +50,14 @@ export class Check {
 	}
 
 	public static async checkForm(form: FormInputElement[], name: string, verbose = true): Promise<void> {
-		let expectation =async (form, name)=>{
-			for(let item of form) {
-				await expect(item.field.getText()).toEqual(item.value, 'Field "' + item.name + '" in form "' + name + '" should be ' + item.value);
-			}
-		};
-		await this.doIt2(expectation, verbose, 'Check data in form ' + name, form, name);
+		await allure.createStep('Action: Review the form ' + name, async () => {
+			let expectation =async (form, name)=>{
+				for(let item of form) {
+					await expect(item.field.getText()).toEqual(item.value, 'Field "' + item.name + '" in form "' + name + '" should be ' + item.value);
+				}
+			};
+			await this.doIt2(expectation, verbose, 'The data in the form ' + name, form, name)
+		})();
 	}
 
 	public static async checkIsPresent(field: ElementFinder, name: string, verbose = true): Promise<void> {
