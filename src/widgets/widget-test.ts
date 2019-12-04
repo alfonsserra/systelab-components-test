@@ -29,6 +29,14 @@ export class Widget {
 		return this.elem.element(by.id((id)));
 	}
 
+	public byTagName(id: string): ElementFinder {
+		return this.elem.element(by.tagName((id)));
+	}
+
+	public byCSS(id: string): ElementFinder {
+		return this.elem.element(by.css((id)));
+	}
+
 	/**
 	 * Utility to wait until the Page is present and displayed
 	 * @param {Widget} obj
