@@ -22,5 +22,9 @@ export class ComboBox extends Widget {
 		await this.elem.all(by.css('.ag-cell-value')).get(i).click();
 	}
 
+	public async selectOptionByText(text: string): Promise<void> {
+		await this.elem.all(by.cssContainingText('.ag-cell-value',text)).click();
+	}
+
 }
 
