@@ -56,7 +56,7 @@ export class Check {
 					await expect(item.field.getText()).toEqual(item.value, 'Field "' + item.name + '" in form "' + name + '" should be ' + item.value);
 				}
 			};
-			await this.doIt2(expectation, verbose, 'The data in the form ' + name, form, name)
+			await this.doIt2(expectation, verbose, 'The form is in the correct status', form, name)
 		})();
 	}
 
