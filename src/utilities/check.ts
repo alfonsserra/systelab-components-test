@@ -62,7 +62,7 @@ export class Check {
 
 	public static async checkArray(texts: string[], expectedTexts: string[], actionName: string, verbose = true): Promise<void> {
 		if (verbose) {
-			await allure.createStep(`Action: Review the ` + actionName + `: [${expectedTexts}]"`, async () => {})();
+			await allure.createStep(`Action: Review the ` + actionName + `: [${expectedTexts}]`, async () => {})();
 		}
 		await expect(texts).toEqual(expectedTexts);
 		if (verbose) {
@@ -119,21 +119,25 @@ export class Check {
 	}
 
 	public static async checkButtons(page: SystelabDialogTest, buttons: FormButtonElement[]):Promise<void> {
-		await allure.createStep('Action: Review the button name and status:' + JSON.stringify(buttons), async () => {
 			await Check.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
+			let expectedTxt = '';
 			for(let button of buttons) {
 				if (button.exist) {
 					await Check.checkBoolean(page.getButtonByName(button.name).isPresent(), `Button ${button.name} is present`, false);
+					expectedTxt += (expectedTxt === '' ? '':'\n') + button.name;
 					if (button.enable) {
 						await Check.checkBoolean(page.getButtonByName(button.name).isEnabled(), `Button ${button.name} is enabled`, false);
+						expectedTxt += ' is enabled';
 					} else {
 						await Check.checkBoolean(page.getButtonByName(button.name).isDisabled(), `Button ${button.name} is disabled`, false);
+						expectedTxt += ' is disabled';
 					}
 				}
 			}
-			await allure.createStep('The buttons are in the correct status', () => {
-			})();
-		})();
+			if (expectedTxt !== '') {
+				await allure.createStep(expectedTxt, () => {
+				})();
+			}
 	}
 
 	private static async doIt2(expectation: (x,y) => any, verbose, text, param1, param2): Promise<void> {
