@@ -124,7 +124,7 @@ export class Check {
 			for(let button of buttons) {
 				if (button.exist) {
 					await Check.checkBoolean(page.getButtonByName(button.name).isPresent(), `Button ${button.name} is present`, false);
-					expectedTxt += (expectedTxt === '' ? '':`<br>`) + button.name;
+					expectedTxt += (expectedTxt === '' ? '':', ') + button.name;
 					if (button.enable) {
 						await Check.checkBoolean(page.getButtonByName(button.name).isEnabled(), `Button ${button.name} is enabled`, false);
 						expectedTxt += ' is enabled';
