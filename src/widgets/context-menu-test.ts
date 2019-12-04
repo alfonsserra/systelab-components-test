@@ -14,7 +14,7 @@ export class ContextMenu extends Widget {
 		return content;
 	}
 
-	public async selectOption(i: number): Promise<void> {
+	public async selectOptionByNumber(i: number): Promise<void> {
 		await this.elem.all(by.tagName('systelab-context-menu-item')).get(i).click();
 	}
 
