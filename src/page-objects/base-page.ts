@@ -1,4 +1,4 @@
-import { by, element, ElementFinder } from 'protractor';
+import { browser, by, element, ElementFinder, ExpectedConditions } from 'protractor';
 
 export class BasePage {
 
@@ -12,12 +12,7 @@ export class BasePage {
         return this.current;
     }
 
-    /**
-     * Utility to wait until the Page is present and displayed
-     * @param {BasePage} obj
-     */
-    public async wait(): Promise<boolean> {
-        return await this.current.isPresent() && await this.current.isDisplayed();
+    public async waitToBePresent(): Promise<void> {
+        await browser.wait(ExpectedConditions.presenceOf(this.current));
     }
-
 }

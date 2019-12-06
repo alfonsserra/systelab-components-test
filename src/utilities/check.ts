@@ -111,7 +111,7 @@ export class Check {
 	}
 
 	public static async checkDialogTitleAndButtons(page: SystelabDialogTest, expectedTitle: string, buttons?: FormButtonElement[]) {
-		await page.wait();
+		await page.waitToBePresent();
 		await this.checkText(page.getTitle(), 'Window title', expectedTitle);
 		if (buttons) {
 			await this.checkButtons(page, buttons);

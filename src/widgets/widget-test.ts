@@ -1,4 +1,4 @@
-import { by, ElementFinder } from 'protractor';
+import { browser, by, ElementFinder, ExpectedConditions } from 'protractor';
 
 export class Widget {
 	constructor(protected elem: ElementFinder) {
@@ -37,11 +37,7 @@ export class Widget {
 		return this.elem.element(by.css((id)));
 	}
 
-	/**
-	 * Utility to wait until the Page is present and displayed
-	 * @param {Widget} obj
-	 */
-	public async wait(): Promise<boolean> {
-		return await this.elem.isPresent() && await this.elem.isDisplayed();
+	public async waitToBePresent(): Promise<void> {
+		await browser.wait(ExpectedConditions.presenceOf(this.elem));
 	}
 }
