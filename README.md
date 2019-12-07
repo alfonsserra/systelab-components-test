@@ -62,3 +62,12 @@ element(by.partialButtonText('Save'));  // part of button text
 element(by.cssContainingText('.pet', 'Dog')) // for selecting this: <li class="pet">Dog</li>
 element(by.deepCss('span'))             // for selecting all level of spans <span><span>x</span></span>
 ```
+
+
+## Links
+
+Run tests in parallel: http://criticaltester.com/test-processes/automated-testing/protractor-good-practices/
+
+Best practices: https://www.logigear.com/blog/test-automation/15-best-practices-for-building-an-awesome-protractor-framework/
+
+Testing Angular https://livebook.manning.com/book/testing-angular-applications/chapter-9/64

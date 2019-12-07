@@ -2,16 +2,16 @@ import { by, element } from 'protractor';
 import { Widget } from './widget-test';
 import { Button } from './button-test';
 
-export class MesssagePopupPage extends Widget {
+export class MesssagePopup extends Widget {
     public BUTTON_CLOSE = 0;
     public BUTTONS_YES_NO = 1;
 
     constructor() {
-        super(element.all(by.tagName('mp-modal-container')).element(by.tagName('dialog-view')));
+        super(element(by.tagName('dialog-view')));
     }
 
     public async getTextMessage() {
-        return await this.elem.element(by.id('popup-message')).getText();
+        return await this.byId('popup-message').getText();
     }
 
     public getButtonYes(): Button {
