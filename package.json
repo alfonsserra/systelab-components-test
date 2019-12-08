@@ -1,6 +1,6 @@
 {
   "name": "systelab-components-test",
-  "version": "1.0.44",
+  "version": "1.0.45",
   "license": "MIT",
   "description": "Widgets to be use in the E2E Tests based in Protractor",
   "keywords": [

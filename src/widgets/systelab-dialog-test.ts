@@ -1,6 +1,7 @@
 import { by } from 'protractor';
 import { Widget } from './widget-test';
 import { Button } from './button-test';
+import { MesssagePopup } from './message-popup-test';
 
 export class SystelabDialogTest extends Widget {
 
@@ -28,5 +29,9 @@ export class SystelabDialogTest extends Widget {
 	public getButtonByName(name: string): Button {
 		return new Button(this.elem
 			.element(by.buttonText(name)));
+	}
+
+	public getMesssagePopup(): MesssagePopup {
+		return new MesssagePopup();
 	}
 }
