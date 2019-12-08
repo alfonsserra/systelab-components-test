@@ -47,14 +47,9 @@ export class Grid extends Widget {
 	}
 
 	public async getGridHeader(): Promise<Array<string>> {
-		let content: string[] = [];
-		let cols:ElementArrayFinder = this.elem.all(by.className('ag-header-container')).all(by.className('ag-header-cell-label'));
-		let numberOfRows: number = await cols.count();
-		for (let i = 0; i < numberOfRows; i++) {
-			let text: string = await cols.get(i).element(by.className('ag-header-cell-text')).getText();
-			content.push(text);
-		}
-		return content;
+		// See error https://github.com/angular/protractor/issues/3818
+		let cols:any = this.elem.all(by.css('.ag-header-container .ag-header-cell-label'));
+		return await cols.getText();
 	}
 
 	public getMenu(): ContextMenu {
