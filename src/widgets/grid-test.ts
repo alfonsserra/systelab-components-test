@@ -21,6 +21,10 @@ export class Grid extends Widget {
 		return content;
 	}
 
+	public async getValuesInRow(row: number): Promise<Array<string>>  {
+		return await this.getRow(row);
+	}
+
 	public async clickOnRowMenu(row: number): Promise<void> {
 		await this.clickOnRow(row,'contextMenu');
 	}
