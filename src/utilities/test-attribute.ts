@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 export interface IAttributeProperties {
+	name?: string;
 	type?: AttributeType;
 	visible?: boolean;
 	enable?: boolean;
