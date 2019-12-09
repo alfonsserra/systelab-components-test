@@ -26,6 +26,10 @@ export class MesssagePopup extends Widget {
         return this.getButton('Close');
     }
 
+    public async close() {
+        await this.getButtonClose().click();
+    }
+
     private getButton(text: string): Button {
         return new Button(this.elem
             .element(by.tagName('systelab-dialog-bottom'))

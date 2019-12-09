@@ -23,6 +23,10 @@ export class SystelabDialogTest extends Widget {
 	}
 
 	public async back() {
+		await this.close();
+	}
+
+	public async close() {
 		await this.getButtonClose().click();
 	}
 
