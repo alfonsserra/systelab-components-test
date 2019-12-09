@@ -71,3 +71,5 @@ Run tests in parallel: http://criticaltester.com/test-processes/automated-testin
 Best practices: https://www.logigear.com/blog/test-automation/15-best-practices-for-building-an-awesome-protractor-framework/
 
 Testing Angular https://livebook.manning.com/book/testing-angular-applications/chapter-9/64
+
+https://www.youtube.com/watch?v=ympTE-bLYaU

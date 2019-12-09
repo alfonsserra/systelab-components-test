@@ -1,8 +1,6 @@
 import { browser, ElementFinder } from 'protractor';
 import { JSConsole } from './js-console';
-import { SystelabDialogTest, Tabs } from '..';
-import { FormInputElement } from '../services/form-input-element.model';
-import { FormButtonElement } from '../services';
+import { Tabs } from '..';
 
 declare const allure: any;
 
@@ -47,17 +45,6 @@ export class Check {
 		let expectation = async (text, name, expectedText) =>await expect(text)
 			.toEqual(expectedText, 'Field "' + name + '" should be ' + expectedText);
 		await this.doIt3(expectation, verbose, name + ' is equals to ' + expectedText, text, name, expectedText);
-	}
-
-	public static async checkForm(form: FormInputElement[], name: string, verbose = true): Promise<void> {
-		await allure.createStep('Action: Review the form ' + name, async () => {
-			let expectation =async (form, name)=>{
-				for(let item of form) {
-					await expect(item.field.getText()).toEqual(item.value, 'Field "' + item.name + '" in form "' + name + '" should be ' + item.value);
-				}
-			};
-			await this.doIt2(expectation, verbose, 'The form is in the correct status', form, name)
-		})();
 	}
 
 	public static async checkArray(texts: string[], expectedTexts: string[], actionName: string, verbose = true): Promise<void> {
@@ -108,36 +95,6 @@ export class Check {
 		let expectation = async (field, name, expectedValue )=>await expect(field.getAttribute('disabled'))
 			.toEqual(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
 		await this.doIt3(expectation, verbose, 'Field "' + name + '" is disabled is equal ' + expectedValue, field, name, expectedValue);
-	}
-
-	public static async checkDialogTitleAndButtons(page: SystelabDialogTest, expectedTitle: string, buttons?: FormButtonElement[]) {
-		await page.waitToBePresent();
-		await this.checkText(page.getTitle(), 'Window title', expectedTitle);
-		if (buttons) {
-			await this.checkButtons(page, buttons);
-		}
-	}
-
-	public static async checkButtons(page: SystelabDialogTest, buttons: FormButtonElement[]):Promise<void> {
-			await Check.checkNumber(page.getNumberOfButtons(), `Number of buttons`, buttons.filter((b) => b.exist).length);
-			let expectedTxt = '';
-			for(let button of buttons) {
-				if (button.exist) {
-					await Check.checkBoolean(page.getButtonByName(button.name).isPresent(), `Button ${button.name} is present`, false);
-					expectedTxt += (expectedTxt === '' ? 'Buttons: ':', ') + button.name;
-					if (button.enable) {
-						await Check.checkBoolean(page.getButtonByName(button.name).isEnabled(), `Button ${button.name} is enabled`, false);
-						expectedTxt += ' is enabled';
-					} else {
-						await Check.checkBoolean(page.getButtonByName(button.name).isDisabled(), `Button ${button.name} is disabled`, false);
-						expectedTxt += ' is disabled';
-					}
-				}
-			}
-			if (expectedTxt !== '') {
-				await allure.createStep(expectedTxt, () => {
-				})();
-			}
 	}
 
 	public static async checkTabs(tabs: Tabs, expectedTabTitles:string[]):Promise<void> {

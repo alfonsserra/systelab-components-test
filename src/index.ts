@@ -5,7 +5,6 @@ export * from './widgets/datepicker-test';
 export * from './widgets/grid-test';
 export * from './widgets/icon-test';
 export * from './widgets/inputfield-test';
-export * from './widgets/inputfield-test';
 export * from './widgets/label-test';
 export * from './widgets/message-popup-test';
 export * from './widgets/popup-test';

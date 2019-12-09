@@ -10,7 +10,7 @@ export class Grid extends Widget {
 			.count();
 	}
 
-	public async getRow(row: number): Promise<Array<string>> {
+	public async getValuesInRow(row: number): Promise<Array<string>>  {
 		let content: string[] = [];
 		let cols:ElementArrayFinder = this.elem.all(by.css('div[row-index="' + row + '"] div.ag-cell-value'));
 		let numberOfRows: number = await cols.count();
@@ -19,10 +19,6 @@ export class Grid extends Widget {
 			content.push(text);
 		}
 		return content;
-	}
-
-	public async getValuesInRow(row: number): Promise<Array<string>>  {
-		return await this.getRow(row);
 	}
 
 	public async clickOnRowMenu(row: number): Promise<void> {
