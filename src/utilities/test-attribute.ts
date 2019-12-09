@@ -2,11 +2,11 @@ import 'reflect-metadata';
 
 export interface IAttributeProperties {
 	type?: AttributeType;
-	isVisible?: boolean;
-	isEnable?: boolean;
-	hasLabel?: boolean;
-	isMandatory?: boolean;
-	maxLength?: number;
+	visible?: boolean;
+	enable?: boolean;
+	label?: boolean;
+	mandatory?: boolean;
+	length?: number;
 }
 
 export enum AttributeType {
