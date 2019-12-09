@@ -1,34 +1,25 @@
-import { browser, ElementFinder } from 'protractor';
-import { JSConsole } from './js-console';
-import { Tabs } from '..';
+import { ElementFinder } from 'protractor';
 
 declare const allure: any;
 
+class MyExpectation {
+	constructor(public reason: string) {
+	}
+	public expect<T>(actual: T) {
+		if (this.reason) {
+			return allure.createStep(this.reason, function () {
+				return expect(actual);
+			})();
+		} else {
+			return expect(actual);
+		}
+	}
+}
+export function because(reason: string): MyExpectation {
+	return new MyExpectation(reason);
+}
+
 export class Check {
-
-	private static console = new JSConsole();
-
-	public static init(tms: string, feature: string, version: string, user: string) {
-		allure.addLabel('tms', tms);
-		allure.addLabel('feature', feature);
-		let capabilities = browser.driver.getCapabilities()
-			.then((caps) => {
-				browser.browserName = caps.get('browserName');
-				allure.addLabel('browser', browser.browserName);
-			});
-		if (version) {
-			allure.addLabel('appVersion', version);
-		}
-		if (user) {
-			allure.addLabel('tester', user);
-		}
-		allure.addLabel('testExecutionDateTime', new Date().toLocaleString());
-		this.console.clear();
-	}
-
-	public static async hasErrorsInConsole():Promise<boolean> {
-		return await this.console.hasErrors();
-	}
 
 	public static async checkNumber(n: Promise<number>, name: string, expectedCount: number, verbose = true): Promise<void> {
 		let expectation = async (n, name, expectedCount) => await expect(n)
@@ -95,15 +86,6 @@ export class Check {
 		let expectation = async (field, name, expectedValue )=>await expect(field.getAttribute('disabled'))
 			.toEqual(expectedValue, 'Field "' + name + '" should be ' + expectedValue);
 		await this.doIt3(expectation, verbose, 'Field "' + name + '" is disabled is equal ' + expectedValue, field, name, expectedValue);
-	}
-
-	public static async checkTabs(tabs: Tabs, expectedTabTitles:string[]):Promise<void> {
-		await Check.checkNumber(tabs.getNumberOfTabs(), 'Number of tabs', expectedTabTitles.length);
-		for (let i = 0 ; i < expectedTabTitles.length; i++) {
-			await Check.checkText(tabs.getTab(i).getText(), `Tab ${expectedTabTitles[i]} is present`, expectedTabTitles[i], false);
-		}
-		await allure.createStep('Tabs: ' + expectedTabTitles.toString(), () => {
-		})();
 	}
 
 	private static async doIt2(expectation: (x,y) => any, verbose, text, param1, param2): Promise<void> {

@@ -12,4 +12,3 @@ export * from './widgets/systelab-dialog-test';
 export * from './widgets/tabs-test';
 export * from './widgets/tab-test';
 export * from './widgets/widget-test';
-
