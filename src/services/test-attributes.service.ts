@@ -39,7 +39,7 @@ export class TestAttributesService {
 			await expect(input.isEnabled()).toEqual(enable);
 		}
 		if (visible!==undefined) {
-			await expect(input.isDisplayed).toEqual(visible);
+			await expect(input.isDisplayed()).toEqual(visible);
 		}
 		if (length!==undefined) {
 			let text=this.random(length);
