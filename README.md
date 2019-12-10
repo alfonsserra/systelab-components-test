@@ -66,10 +66,8 @@ element(by.deepCss('span'))             // for selecting all level of spans <spa
 
 ## Links
 
-Run tests in parallel: http://criticaltester.com/test-processes/automated-testing/protractor-good-practices/
-
-Best practices: https://www.logigear.com/blog/test-automation/15-best-practices-for-building-an-awesome-protractor-framework/
-
-Testing Angular https://livebook.manning.com/book/testing-angular-applications/chapter-9/64
-
-https://www.youtube.com/watch?v=ympTE-bLYaU
+- [Good practices](http://criticaltester.com/test-processes/automated-testing/protractor-good-practices/) specially how to run tests in parallel.
+- [Best practices](https://www.logigear.com/blog/test-automation/15-best-practices-for-building-an-awesome-protractor-framework/)
+- [Testing Angular](https://livebook.manning.com/book/testing-angular-applications/chapter-9/64) 
+- [Large scale Angular testing with Protractor](https://www.youtube.com/watch?v=ympTE-bLYaU
+) by Andres Dominguez
