@@ -1,11 +1,11 @@
 import { Button } from '../widgets/button-test';
 import { Widget } from '../widgets/widget-test';
 import { InputField } from '../widgets/inputfield-test';
+import { BasePage } from '../page-objects';
 
 export class TestAttributesService {
 
-
-	public static async check(dialog) {
+	public static async check(dialog: Widget | BasePage) {
 		const m: Array<string> = Object.getOwnPropertyNames(Object.getPrototypeOf(dialog));
 
 		for (let i = 0; i < m.length; i++) {
@@ -20,7 +20,7 @@ export class TestAttributesService {
 					let method: any = dialog[m[i]];
 					let widget = await Reflect.apply(method, dialog, []);
 					if (this.isButton(widget)) {
-						await this.checkButton(<Button>widget, enable, visible, label, mandatory, length)
+						await this.checkButton(<Button>widget, enable, visible)
 					} else if (this.isInputField(widget)) {
 						await this.checkInputField(<InputField>widget, enable, visible, label, mandatory, length)
 					}
@@ -28,9 +28,12 @@ export class TestAttributesService {
 		}
 	}
 
-	private static async checkButton(button: Button, enable: boolean, visible: boolean, label: boolean, mandatory: boolean, length: number) {
+	private static async checkButton(button: Button, enable: boolean, visible: boolean) {
 		if (enable!==undefined) {
 			await expect(button.isEnabled()).toEqual(enable);
+		}
+		if (visible!==undefined) {
+			await expect(button.isDisplayed()).toEqual(visible);
 		}
 	}
 
@@ -54,11 +57,11 @@ export class TestAttributesService {
 		}
 	}
 
-	public static isButton(widget: Widget): boolean {
+	private static isButton(widget: Widget): boolean {
 		return widget instanceof Button;
 	}
 
-	public static isInputField(widget: Widget): boolean {
+	private static isInputField(widget: Widget): boolean {
 		return widget instanceof InputField;
 	}
 
