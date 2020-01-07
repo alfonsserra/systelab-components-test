@@ -6,18 +6,18 @@ import { BasePage } from '../page-objects';
 export class TestAttributesService {
 
 	public static async check(dialog: Widget | BasePage) {
-		const m: Array<string> = Object.getOwnPropertyNames(Object.getPrototypeOf(dialog));
+		const methods: Array<string> = Object.getOwnPropertyNames(Object.getPrototypeOf(dialog));
 
-		for (let i = 0; i < m.length; i++) {
-				let name = Reflect.getMetadata('test:name', dialog, m[i]);
-				let type = Reflect.getMetadata('test:type', dialog, m[i]);
-				let enable = Reflect.getMetadata('test:enable', dialog, m[i]);
-				let visible = Reflect.getMetadata('test:visible', dialog, m[i]);
-				let label = Reflect.getMetadata('test:label', dialog, m[i]);
-				let mandatory = Reflect.getMetadata('test:mandatory', dialog, m[i]);
-				let length = Reflect.getMetadata('test:length', dialog, m[i]);
+		for (let i = 0; i < methods.length; i++) {
+				let name = Reflect.getMetadata('test:name', dialog, methods[i]);
+				let type = Reflect.getMetadata('test:type', dialog, methods[i]);
+				let enable = Reflect.getMetadata('test:enable', dialog, methods[i]);
+				let visible = Reflect.getMetadata('test:visible', dialog, methods[i]);
+				let label = Reflect.getMetadata('test:label', dialog, methods[i]);
+				let mandatory = Reflect.getMetadata('test:mandatory', dialog, methods[i]);
+				let length = Reflect.getMetadata('test:length', dialog, methods[i]);
 				if (name) {
-					let method: any = dialog[m[i]];
+					let method: any = dialog[methods[i]];
 					let widget = await Reflect.apply(method, dialog, []);
 					if (this.isButton(widget)) {
 						await this.checkButton(<Button>widget, enable, visible)
@@ -45,12 +45,12 @@ export class TestAttributesService {
 			await expect(input.isDisplayed()).toEqual(visible);
 		}
 		if (length!==undefined) {
-			let text=this.random(length);
+			let text=this.getRandomWord(length);
 			await input.clear();
 			await input.setText(text);
 			await expect(input.getText()).toEqual(text);
 
-			let text2=this.random(length+1);
+			let text2=this.getRandomWord(length+1);
 			await input.clear();
 			await input.setText(text2);
 			await expect(input.getText()).toEqual(text2.substring(0,length));
@@ -65,7 +65,7 @@ export class TestAttributesService {
 		return widget instanceof InputField;
 	}
 
-	private static random(length) {
+	private static getRandomWord(length: number) {
 		var result           = '';
 		var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		var charactersLength = characters.length;
