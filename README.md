@@ -23,46 +23,61 @@ cd systelab-components-test
 npm install
 ```
 
-## Protractor Locators (Selectors)
+## Do your test
 
-The most used:
+### Create your Page Object
 
-```
-$('#some-id')
-```
+For every page object create a new class by extending BasePage. Call the super constructor with the selector as a parameter.
 
-or
+```typescript
+export class MainPage extends BasePage {
 
-```
-element(by.id('some-id'))
-```
-
-The $ is not a jQuery selector, but a shorthanded version of element(by.css('#some-id')). In this fashion, we’d be able to select elements by id, class and attributes:
-
-```
-$('.some-class')             // element(by.className())
-$('tag-name')                // element(by.tagName())
-$('[ng-message=required]')   // remember to leave out the double quotes around the value of attribute
-$('#parent #child')          // select one child inside parent
-$('ul li')                   // select all children inside parent
-$('ul li').first()           // select first of children
-$('ul li').last()            // select last of children
-$('ul li').get(index)        // select index-th of children
+	constructor() {
+		super('my-selector');
+	}
 ```
 
-Then we get the more interesting ones:
+Create methods to access the different widgets that can be directly found in the page. The available widgets are:
 
-```
-element(by.model('data'));
-element(by.repeater('cat in pets'));
-element(by.options('c for c in colors'))
-element(by.binding('value'));           // only look through the elements with ng-binding attribute
-element(by.buttonText('Save'));         // the whole of button text
-element(by.partialButtonText('Save'));  // part of button text
-element(by.cssContainingText('.pet', 'Dog')) // for selecting this: <li class="pet">Dog</li>
-element(by.deepCss('span'))             // for selecting all level of spans <span><span>x</span></span>
+- Button
+- ComboBox
+- ContextMenu
+- Datepicker
+- Grid
+- Icon
+- InputField
+- Label
+- MesssagePopup
+- Popup
+- SystelabDialog
+- Tab
+- Tabs
+
+For example
+
+```typescript
+	public getAllergyGrid(): Grid {
+		return new Grid(this.current.element(by.id('AllergyTable')));
+	}
 ```
 
+Use the appropriate locator in order to get the right ElementFinder.
+
+### Create your Test spec
+
+In your spec files, use the needed page objects and access to the widgets through the methods defined. 
+Interact with the widgets with the methods provided by the library. 
+
+For example:
+
+```typescript
+it(`Should be able to do something`, async () => {
+        const patientMaintenanceDialog = await mainPage.getPatientMaintenanceDialog();
+		await patientMaintenanceDialog.getButtonAdd().click();
+		const patientDialog = await patientMaintenanceDialog.getPatientDialog();
+		await patientDialog.getTabs().selectTab(1);
+	});
+```
 
 ## Links
 
