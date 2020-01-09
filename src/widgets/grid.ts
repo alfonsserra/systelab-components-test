@@ -1,6 +1,6 @@
-import { Widget } from './widget-test';
+import { Widget } from './widget';
 import { by, ElementArrayFinder } from 'protractor';
-import { ContextMenu } from './context-menu-test';
+import { ContextMenu } from './context-menu';
 
 export class Grid extends Widget {
 

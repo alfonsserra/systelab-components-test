@@ -1,4 +1,4 @@
-import { Widget } from './widget-test';
+import { Widget } from './widget';
 import { by } from 'protractor';
 
 export class Tab extends Widget {

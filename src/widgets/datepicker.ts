@@ -1,5 +1,5 @@
 import { by, ElementFinder, protractor } from "protractor";
-import { Widget } from './widget-test';
+import { Widget } from './widget';
 
 export class Datepicker extends Widget {
 	public async isPresent(): Promise<boolean> {

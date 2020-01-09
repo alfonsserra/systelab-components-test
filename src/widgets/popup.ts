@@ -1,6 +1,6 @@
 import { by } from 'protractor';
-import { Button } from './button-test';
-import { Widget } from './widget-test';
+import { Button } from './button';
+import { Widget } from './widget';
 
 export class Popup extends Widget {
 

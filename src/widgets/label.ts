@@ -1,4 +1,4 @@
-import { Widget } from './widget-test';
+import { Widget } from './widget';
 
 export class Label extends Widget {
 

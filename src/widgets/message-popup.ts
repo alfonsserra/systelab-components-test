@@ -1,6 +1,6 @@
 import { by, element } from 'protractor';
-import { Widget } from './widget-test';
-import { Button } from './button-test';
+import { Widget } from './widget';
+import { Button } from './button';
 
 export class MesssagePopup extends Widget {
 	public BUTTON_CLOSE = 0;

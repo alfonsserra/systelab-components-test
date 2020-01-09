@@ -49,7 +49,7 @@ Create methods to access the different widgets that can be directly found in the
 - Label
 - MesssagePopup
 - Popup
-- SystelabDialog
+- Dialog
 - Tab
 - Tabs
 

@@ -1,6 +1,6 @@
-import { Button } from '../widgets/button-test';
-import { Widget } from '../widgets/widget-test';
-import { InputField } from '../widgets/inputfield-test';
+import { Button } from '../widgets/button';
+import { Widget } from '../widgets/widget';
+import { InputField } from '../widgets/inputfield';
 import { BasePage } from '../page-objects';
 
 export class TestAttributesService {

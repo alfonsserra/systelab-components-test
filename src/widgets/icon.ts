@@ -1,4 +1,4 @@
-import { Widget } from './widget-test';
+import { Widget } from './widget';
 
 export class Icon extends Widget {
 	public async click(): Promise<void> {

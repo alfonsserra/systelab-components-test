@@ -1,9 +1,9 @@
 import { by } from 'protractor';
-import { Widget } from './widget-test';
-import { Button } from './button-test';
-import { MesssagePopup } from './message-popup-test';
+import { Widget } from './widget';
+import { Button } from './button';
+import { MesssagePopup } from './message-popup';
 
-export class SystelabDialogTest extends Widget {
+export class Dialog extends Widget {
 
 	public async getNumberOfButtons():Promise<number> {
 		return await this.elem
