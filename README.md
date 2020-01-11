@@ -38,20 +38,7 @@ export class MainPage extends BasePage {
 ```
 
 In the Page Object, create methods to access the different widgets that can be directly found in the page. The available widgets are:
-
-- Button
-- ComboBox
-- ContextMenu
-- Datepicker
-- Grid
-- Icon
-- InputField
-- Label
-- MesssagePopup
-- Popup
-- Dialog
-- Tab
-- Tabs
+Button, ComboBox, ContextMenu, Datepicker, Grid, Icon, InputField, Label, MesssagePopup, Popup, Dialog, Tab, Tabs
 
 For example
 
