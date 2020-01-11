@@ -23,7 +23,7 @@ cd systelab-components-test
 npm install
 ```
 
-## Do your test
+## Using the library
 
 ### Create your Page Object
 
@@ -37,7 +37,7 @@ export class MainPage extends BasePage {
 	}
 ```
 
-Create methods to access the different widgets that can be directly found in the page. The available widgets are:
+In the Page Object, create methods to access the different widgets that can be directly found in the page. The available widgets are:
 
 - Button
 - ComboBox
@@ -60,8 +60,29 @@ For example
 		return new Grid(this.current.element(by.id('AllergyTable')));
 	}
 ```
-
 Use the appropriate locator in order to get the right ElementFinder.
+
+Dialogs are considered widgets an not page objects, so, for each one you will have to create a class extending Dialog and in that class create methods to access the different widgets that can be directly found in the dialog.
+
+For example:
+
+```typescript
+	public getAllergyDetailDialog(): AllergyDetailDialog {
+		return new AllergyDetailDialog(element(by.tagName('allergy-dialog')));
+	}
+```
+
+And the class implementing the dialog will be something like:
+
+```typescript
+export class AllergyDetailDialog extends Dialog {
+
+	public getEnableSwitch() {
+		return this.byId('AllergyEnableSwitch').element(by.tagname('input'));
+	}
+...
+```
+
 
 ### Create your Test spec
 
