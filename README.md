@@ -40,7 +40,7 @@ export class MainPage extends BasePage {
 In the Page Object, create methods to access the different widgets that can be directly found in the page. The available widgets are:
 Button, ComboBox, ContextMenu, Datepicker, Grid, Icon, InputField, Label, MesssagePopup, Popup, Dialog, Tab, Tabs
 
-For example
+For example:
 
 ```typescript
 	public getAllergyGrid(): Grid {
@@ -87,7 +87,7 @@ it(`Should be able to do something`, async () => {
 	});
 ```
 
-## Links
+## Useful Links
 
 - [Good practices](http://criticaltester.com/test-processes/automated-testing/protractor-good-practices/) specially how to run tests in parallel.
 - [Best practices](https://www.logigear.com/blog/test-automation/15-best-practices-for-building-an-awesome-protractor-framework/)
