@@ -87,6 +87,61 @@ it(`Should be able to do something`, async () => {
 	});
 ```
 
+### Allure
+
+In order to document test cases we suggest to use Allure.
+
+With allure the test cases will look like the following example:
+
+```typescript
+await allure.createStep(`Action: Set a valid username and password`, async () => {
+			await LoginActionService.login(loginPage);
+		})();
+```
+
+As we want always to document what it is expected, there is a convenient function called because, 
+that can be use with the normal expect function to avoid the need of an inner function. 
+
+Using the function, the test case will look like the example above.
+
+```typescript
+	await because('The logged user is Administrator').expect(await mainPage.getFullUsernameField().getText()).toEqual('Administrator');
+
+```
+
+For more information, please read the documentation at [Allure reporter](https://github.com/systelab/allure-reporter)
+
+### Experimental
+
+With the library there is a decorator and a method that can be used in order to simplify common checks on the widgets.
+
+The idea is to annotate the methods that get specific widgets to test with the @TestAttribute decorator
+
+```typescript
+	@TestAttribute({type: AttributeType.Text, visible: true, enable: true, mandatory: true, length: 20, name: notes})
+	public getAllergyNotes(): InputField {
+		return new InputField(this.byId('PatientAllergyNotes'));
+	}
+```
+
+Once you have all the widgets to test with the proper decoration, in your test you can check the attributes with the method check in the service TestAttributesService :
+
+```typescript
+	public static async check(dialog: Widget | BasePage) {
+```
+
+For example:
+
+```typescript
+	it(`Create a patient: [name: ${patient.name}, surname: ${patient.surname}, email: ${patient.email}]`, async () => {
+		await patientMaintenanceDialog.getButtonAdd().click();
+		TestAttributesService.check(patientDialog)
+		await patientDialog.set(patient);
+		await patientDialog.getButtonSubmit().click();
+		await checkPatient(patient);
+	});
+```
+
 ## Useful Links
 
 - [Good practices](http://criticaltester.com/test-processes/automated-testing/protractor-good-practices/) specially how to run tests in parallel.
