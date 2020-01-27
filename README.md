@@ -118,9 +118,9 @@ With the library there is a decorator and a method that can be used in order to 
 The idea is to annotate the methods that get specific widgets to test with the @TestAttribute decorator
 
 ```typescript
-	@TestAttribute({type: AttributeType.Text, visible: true, enable: true, mandatory: true, length: 20, name: notes})
-	public getAllergyNotes(): InputField {
-		return new InputField(this.byId('PatientAllergyNotes'));
+	@TestAttribute({type: AttributeType.Text, visible: true, enable: true, mandatory: true, length: 20, name: 'name'})
+	public getNameInput(): InputField {
+		return new InputField(this.byId('PatientNameInput'));
 	}
 ```
 
@@ -133,12 +133,10 @@ Once you have all the widgets to test with the proper decoration, in your test y
 For example:
 
 ```typescript
-	it(`Create a patient: [name: ${patient.name}, surname: ${patient.surname}, email: ${patient.email}]`, async () => {
+	it(`Check patient dialog`, async () => {
 		await patientMaintenanceDialog.getButtonAdd().click();
-		TestAttributesService.check(patientDialog)
-		await patientDialog.set(patient);
-		await patientDialog.getButtonSubmit().click();
-		await checkPatient(patient);
+		await TestAttributesService.check(patientDialog)
+		await patientDialog.getButtonClose().click();
 	});
 ```
 
