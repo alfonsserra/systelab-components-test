@@ -11,11 +11,11 @@ export class Grid extends Widget {
 	}
 
 	public async getValuesInRow(row: number): Promise<Array<string>>  {
-		let content: string[] = [];
-		let cols:ElementArrayFinder = this.elem.all(by.css('div[row-index="' + row + '"] div.ag-cell-value'));
-		let numberOfRows: number = await cols.count();
+		const content: string[] = [];
+		const cols:ElementArrayFinder = this.elem.all(by.css(`div[row-index="${row}"] div.ag-cell-value`));
+		const numberOfRows: number = await cols.count();
 		for (let i = 0; i < numberOfRows; i++) {
-			let text: string = await cols.get(i).getText();
+			const text: string = await cols.get(i).getText();
 			content.push(text);
 		}
 		return content;
@@ -24,11 +24,12 @@ export class Grid extends Widget {
 	public async clickOnRowMenu(row: number): Promise<void> {
 		await this.clickOnRow(row,'contextMenu');
 	}
+
 	public async clickOnRow(row: number, column: string): Promise<void> {
 
 		return await this.elem.element(by.className('ag-center-cols-container'))
-			.element(by.css('div[row-index="' + row + '"]'))
-			.all(by.css('div[col-id="' + column + '"]'))
+			.element(by.css(`div[row-index="${row}"]`))
+			.all(by.css(`div[col-id="${column}"]`))
 			.click();
 	}
 
@@ -39,16 +40,16 @@ export class Grid extends Widget {
 			.click();
 	}
 
-	public async clickOnCell(row: number, col: string): Promise<void> {
+	public async clickOnCell(row: number, column: string): Promise<void> {
 		await this.elem.element(by.className('ag-center-cols-container'))
-			.element(by.css('div[row-index="' + row + '"]'))
-			.all(by.css('div[col-id="' + col + '"]'))
+			.element(by.css(`div[row-index="${row}"]`))
+			.all(by.css(`div[col-id="${column}"]`))
 			.click();
 	}
 
 	public async getGridHeader(): Promise<Array<string>> {
 		// See error https://github.com/angular/protractor/issues/3818
-		let cols:any = this.elem.all(by.css('.ag-header-container .ag-header-cell-label'));
+		const cols: any = this.elem.all(by.css('.ag-header-container .ag-header-cell-label'));
 		return await cols.getText();
 	}
 
