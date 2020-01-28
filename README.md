@@ -37,7 +37,7 @@ export class MainPage extends BasePage {
 	}
 ```
 
-In the Page Object, create methods to access the different widgets that can be directly found in the page. The available widgets are:
+In the Page Object, create methods to access the different widgets that can be directly found in the page. Some available widgets are:
 Button, ComboBox, ContextMenu, Datepicker, Grid, Icon, InputField, Label, MesssagePopup, Popup, Dialog, Tab, Tabs
 
 For example:
@@ -49,7 +49,7 @@ For example:
 ```
 Use the appropriate locator in order to get the right ElementFinder.
 
-Dialogs are considered widgets an not page objects, so, for each one you will have to create a class extending Dialog and in that class create methods to access the different widgets that can be directly found in the dialog.
+Dialogs are considered widgets an not page objects, therefore, for each one, you will have to create a class extending Dialog and in that class create methods to access the different widgets that can be directly found in the dialog.
 
 For example:
 
@@ -99,10 +99,10 @@ await allure.createStep(`Action: Set a valid username and password`, async () =>
 		})();
 ```
 
-As we want always to document what it is expected, there is a convenient function called because, 
-that can be use with the normal expect function to avoid the need of an inner function. 
+If documentation for an expectatio is needed, use the convenient function called *because*, 
+that can be combined with the normal expect function to avoid the need of an inner function for Allure. 
 
-Using the function, the test case will look like the example above.
+Using the function, the test case will look like the above example.
 
 ```typescript
 	await because('The logged user is Administrator').expect(await mainPage.getFullUsernameField().getText()).toEqual('Administrator');
@@ -113,7 +113,7 @@ For more information, please read the documentation at [Allure reporter](https:/
 
 ### Experimental
 
-With the library there is a decorator and a method that can be used in order to simplify common checks on the widgets.
+Included in the library, there is a decorator and a method that can be used in order to simplify common checks on the widgets.
 
 The idea is to annotate the methods that get specific widgets to test with the @TestAttribute decorator
 
@@ -124,7 +124,7 @@ The idea is to annotate the methods that get specific widgets to test with the @
 	}
 ```
 
-Once you have all the widgets to test with the proper decoration, in your test you can check the attributes with the method check in the service TestAttributesService :
+Once you have all the widgets to test with the proper decorator, in your test you can check the attributes with the method check in the service TestAttributesService:
 
 ```typescript
 	public static async check(dialog: Widget | BasePage) {
