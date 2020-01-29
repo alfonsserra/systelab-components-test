@@ -12,7 +12,7 @@ export class Datepicker extends Widget {
 	}
 
 	public async setValue(value: string): Promise<void> {
-		await this.getInputElement().clear();
+		await this.clear(this.getInputElement());
 		await this.getInputElement().sendKeys(value);
 		await this.getInputElement().sendKeys(protractor.Key.TAB);
 	}
@@ -20,4 +20,14 @@ export class Datepicker extends Widget {
 	private getInputElement(): ElementFinder {
 		return this.elem.element(by.css("input"));
 	}
+
+	private async clear(elem) {
+		elem = this.getInputElement();
+		await elem.getAttribute('value').then(async function (text) {
+			const len = text.length;
+			const backspaceSeries = Array(len + 1).join(protractor.Key.BACK_SPACE);
+			await elem.sendKeys(backspaceSeries);
+		});
+	}
+
 }
