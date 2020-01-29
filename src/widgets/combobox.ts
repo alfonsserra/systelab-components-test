@@ -19,7 +19,7 @@ export class ComboBox extends Widget {
 	}
 
 	public async selectOptionByNumber(i: number): Promise<void> {
-		await this.elem.all(by.css('.ag-cell-value')).get(i).click();
+		await this.elem.all(by.css(`[role='row'][row-index='` + i + `']`)).get(1).click();
 	}
 
 	public async selectOptionByText(text: string): Promise<void> {
