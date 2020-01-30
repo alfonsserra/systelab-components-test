@@ -1,4 +1,4 @@
-import { by, ElementFinder, protractor } from "protractor";
+import {by, ElementFinder, Key} from "protractor";
 import { Widget } from './widget';
 
 export class Datepicker extends Widget {
@@ -14,7 +14,7 @@ export class Datepicker extends Widget {
 	public async setValue(value: string): Promise<void> {
 		await this.clear(this.getInputElement());
 		await this.getInputElement().sendKeys(value);
-		await this.getInputElement().sendKeys(protractor.Key.TAB);
+		await this.getInputElement().sendKeys(Key.TAB);
 	}
 
 	private getInputElement(): ElementFinder {
@@ -22,12 +22,10 @@ export class Datepicker extends Widget {
 	}
 
 	private async clear(elem) {
-		elem = this.getInputElement();
-		await elem.getAttribute('value').then(async function (text) {
-			const len = text.length;
-			const backspaceSeries = Array(len + 1).join(protractor.Key.BACK_SPACE);
-			await elem.sendKeys(backspaceSeries);
-		});
+		const currentText=await this.getValue();
+		const len = currentText.length;
+		const backspaceSeries = Array(len + 1).join(Key.BACK_SPACE);
+		await elem.sendKeys(backspaceSeries);
 	}
 
 }
