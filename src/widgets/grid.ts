@@ -1,6 +1,6 @@
-import { Widget } from './widget';
-import { by, ElementArrayFinder } from 'protractor';
-import { ContextMenu } from './context-menu';
+import {Widget} from './widget';
+import {by, element, ElementArrayFinder} from 'protractor';
+import {ContextMenu} from './context-menu';
 
 export class Grid extends Widget {
 
@@ -21,12 +21,17 @@ export class Grid extends Widget {
 		return content;
 	}
 
+	public async getValueInCell(row: number, columnName: string): Promise<string>  {
+		const cellSelector: string = `[role='gridcell'][col-id='` + columnName + `']`;
+		const gridCell = await element.all(by.css(cellSelector)).get(row);
+        return await gridCell.getText();
+	}
+
 	public async clickOnRowMenu(row: number): Promise<void> {
 		await this.clickOnRow(row,'contextMenu');
 	}
 
 	public async clickOnRow(row: number, column: string): Promise<void> {
-
 		return await this.elem.element(by.className('ag-center-cols-container'))
 			.element(by.css(`div[row-index="${row}"]`))
 			.all(by.css(`div[col-id="${column}"]`))
