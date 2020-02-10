@@ -22,7 +22,7 @@ export class Grid extends Widget {
 	}
 
 	public async getValueInCell(row: number, columnName: string): Promise<string>  {
-		const cellSelector: string = `[role='gridcell'][col-id='` + columnName + `']`;
+		const cellSelector = `[role='gridcell'][col-id='` + columnName + `']`;
 		const gridCell = await element.all(by.css(cellSelector)).get(row);
         return await gridCell.getText();
 	}

@@ -8,11 +8,11 @@ export class MultipleComboBox extends Widget {
 	}
 
 	public async getOptions(): Promise<Array<string>> {
-		let content: string[] = [];
-		let rows: ElementArrayFinder = this.elem.all(by.css('.ag-cell-value'));
-		let numberOfItems: number = await rows.count();
+		const content: string[] = [];
+		const rows: ElementArrayFinder = this.elem.all(by.css('.ag-cell-value'));
+		const numberOfItems = await rows.count();
 		for (let i = 0; i < numberOfItems; i++) {
-			let text: string = await rows.get(i).getText();
+			const text = await rows.get(i).getText();
 			content.push(text);
 		}
 		return content;
@@ -25,11 +25,11 @@ export class MultipleComboBox extends Widget {
 
 	public async selectOptionByText(text: string): Promise<void> {
 		let index = -1;
-		let rows: ElementArrayFinder = this.elem.all(by.css('.ag-cell-value'));
-		let numberOfItems: number = await rows.count();
+		const rows: ElementArrayFinder = this.elem.all(by.css('.ag-cell-value'));
+		const numberOfItems = await rows.count();
 		for (let i = 0; i < numberOfItems; i++) {
-			let cellText: string = await rows.get(i).getText();
-			if  ( cellText == text )  {
+			const cellText = await rows.get(i).getText();
+			if  ( cellText === text )  {
 				index = i;
 			}
 		}
