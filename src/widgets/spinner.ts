@@ -1,0 +1,30 @@
+import {by} from "protractor";
+import {Widget} from "./widget";
+
+export class Spinner extends Widget {
+
+	public async clear() {
+		await this.elem.element(by.tagName('input')).clear();
+	}
+
+	public async setText(text: string): Promise<void> {
+		await this.elem.element(by.tagName('input')).sendKeys(text);
+	}
+
+	public async getText(): Promise<string> {
+		return await this.elem.element(by.tagName('input')).getAttribute('value');
+	}
+
+	public async increase() {
+		await this.elem.element(by.className('input-group-append')).click();
+	}
+
+	public async decrease() {
+		await this.elem.element(by.className('input-group-prepend')).click();
+	}
+
+	public async isEnabled(): Promise<boolean> {
+		return await this.elem.isEnabled();
+	}
+
+}
