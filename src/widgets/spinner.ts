@@ -3,7 +3,7 @@ import {Widget} from "./widget";
 
 export class Spinner extends Widget {
 
-	public async clear() {
+	public async clear(): Promise<void>  {
 		await this.elem.element(by.tagName('input')).clear();
 	}
 
@@ -15,16 +15,12 @@ export class Spinner extends Widget {
 		return await this.elem.element(by.tagName('input')).getAttribute('value');
 	}
 
-	public async increase() {
+	public async increase(): Promise<void> {
 		await this.elem.element(by.className('input-group-append')).click();
 	}
 
-	public async decrease() {
+	public async decrease(): Promise<void> {
 		await this.elem.element(by.className('input-group-prepend')).click();
-	}
-
-	public async isEnabled(): Promise<boolean> {
-		return await this.elem.isEnabled();
 	}
 
 }
