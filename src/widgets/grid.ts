@@ -28,11 +28,18 @@ export class Grid extends Widget {
 	}
 
 	public async clickOnRowMenu(row: number): Promise<void> {
-		await this.clickOnRow(row,'contextMenu');
+		await this.clickOnLeftPinnedRow(row,'contextMenu');
 	}
 
 	public async clickOnRow(row: number, column: string): Promise<void> {
 		return await this.elem.element(by.className('ag-center-cols-container'))
+			.element(by.css(`div[row-index="${row}"]`))
+			.all(by.css(`div[col-id="${column}"]`))
+			.click();
+	}
+
+	public async clickOnLeftPinnedRow(row: number, column: string): Promise<void> {
+		return await this.elem.element(by.className('ag-pinned-left-cols-container'))
 			.element(by.css(`div[row-index="${row}"]`))
 			.all(by.css(`div[col-id="${column}"]`))
 			.click();
@@ -52,9 +59,16 @@ export class Grid extends Widget {
 			.click();
 	}
 
+	public async clickOnLeftPinnedCell(row: number, column: string): Promise<void> {
+		await this.elem.element(by.className('ag-pinned-left-cols-container'))
+			.element(by.css(`div[row-index="${row}"]`))
+			.all(by.css(`div[col-id="${column}"]`))
+			.click();
+	}
+
 	public async getGridHeader(): Promise<Array<string>> {
 		// See error https://github.com/angular/protractor/issues/3818
-		const cols: any = this.elem.all(by.css('.ag-header-container .ag-header-cell-label'));
+		const cols: any = this.elem.all(by.css('.ag-header-row .ag-header-cell-label'));
 		return await cols.getText();
 	}
 
