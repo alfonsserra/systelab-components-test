@@ -32,10 +32,7 @@ export class Grid extends Widget {
 	}
 
 	public async clickOnRow(row: number, column: string): Promise<void> {
-		return await this.elem.element(by.className('ag-center-cols-container'))
-			.element(by.css(`div[row-index="${row}"]`))
-			.all(by.css(`div[col-id="${column}"]`))
-			.click();
+		return await this.clickOnCell(row,column);
 	}
 
 	public async clickOnLeftPinnedRow(row: number, column: string): Promise<void> {
