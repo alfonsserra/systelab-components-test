@@ -42,6 +42,12 @@ export class Grid extends Widget {
 			.click();
 	}
 
+	public async clickOnHeaderCell(columnIndex: number): Promise<void> {
+		await this.elem.all(by.className('ag-header-cell-text'))
+			.get(columnIndex - 1)
+			.click();
+	}
+
 	public async clickOnCell(row: number, column: string): Promise<void> {
 		await this.elem.element(by.className('ag-center-cols-container'))
 			.element(by.css(`div[row-index="${row}"]`))
@@ -54,6 +60,32 @@ export class Grid extends Widget {
 			.element(by.css(`div[row-index="${row}"]`))
 			.all(by.css(`div[col-id="${column}"]`))
 			.click();
+	}
+
+	public async selectRow(row: number): Promise<void> {
+		await this.elem.all(by.css(`div[row-index="${row}"] div[col-id="selectCol"] input`))
+			.click();
+	}
+
+	public async getHeaderCaptions(): Promise<Array<string>> {
+		let content: string[] = [];
+		const cols: ElementArrayFinder = this.elem.all(by.className('ag-header-cell'));
+		const numberOfFields: number = await cols.count();
+		for (let i = 0; i < numberOfFields; i++) {
+			const text: string = await cols.get(i).getText();
+			content.push(text);
+		}
+		return content;
+	}
+
+	public async getHeaderCells(): Promise<Array<Element>> {
+		let content: Element[] = [];
+		const cols: ElementArrayFinder = this.elem.all(by.className('ag-header-cell'));
+		const numberOfFields: number = await cols.count();
+		for (let i = 0; i < numberOfFields; i++) {
+			content.push(await cols.get(i));
+		}
+		return content;
 	}
 
 	public async getGridHeader(): Promise<Array<string>> {
