@@ -2,7 +2,7 @@ import { by, element } from 'protractor';
 import { Widget } from './widget';
 import { Button } from './button';
 
-export class MesssagePopup extends Widget {
+export class MessagePopup extends Widget {
 	public BUTTON_CLOSE = 0;
 	public BUTTONS_YES_NO = 1;
 

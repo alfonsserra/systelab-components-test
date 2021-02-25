@@ -1,7 +1,7 @@
 import { by } from 'protractor';
 import { Widget } from './widget';
 import { Button } from './button';
-import { MesssagePopup } from './message-popup';
+import { MessagePopup } from './message-popup';
 
 export class Dialog extends Widget {
 
@@ -31,7 +31,7 @@ export class Dialog extends Widget {
 			.element(by.buttonText(name)));
 	}
 
-	public getMesssagePopup(): MesssagePopup {
-		return new MesssagePopup();
+	public getMessagePopup(): MessagePopup {
+		return new MessagePopup();
 	}
 }
