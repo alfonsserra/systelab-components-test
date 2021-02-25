@@ -31,7 +31,7 @@ export class Dialog extends Widget {
 			.element(by.buttonText(name)));
 	}
 
-	public getMesssagePopup(): MessagePopup {
+	public getMessagePopup(): MessagePopup {
 		return new MessagePopup();
 	}
 }
