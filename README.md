@@ -24,7 +24,7 @@ npm install
 ```
 ## Improving and publishing the library
 
-Once you get you improvements merged, you will need an authorised user in order to publish it. Having the new version is updated in the package.json file, you'll neeed to execute the following commands:
+Once you get your improvements merged, you will need an authorised user in order to publish it. Having the new version updated in the package.json file, you'll neeed to execute the following commands:
 ```bash 
 npm login 
 # Here you will enter your credentials
