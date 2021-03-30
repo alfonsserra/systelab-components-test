@@ -8,7 +8,7 @@ export class BasePage {
         this.current=element(by.tagName(this.selector));
     }
 
-    public getElementFinder() {
+    public getElementFinder(): ElementFinder {
         return this.current;
     }
 

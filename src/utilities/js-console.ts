@@ -2,7 +2,7 @@ import { browser, promise } from 'protractor';
 
 export class JSConsole {
 
-	public clear() {
+	public clear(): void {
 		if (browser.params.searchJavascriptConsoleErrors.toString().toLowerCase() === 'true') {
 			browser.manage().logs().get('browser');
 		}

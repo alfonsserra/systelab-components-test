@@ -22,7 +22,7 @@ export class Dialog extends Widget {
 			.element(by.className('slab-dialog-close')));
 	}
 
-	public async close() {
+	public async close(): Promise<void> {
 		await this.getButtonClose().click();
 	}
 

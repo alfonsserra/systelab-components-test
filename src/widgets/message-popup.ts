@@ -10,7 +10,7 @@ export class MessagePopup extends Widget {
 		super(element(by.tagName('dialog-view')));
 	}
 
-	public async getTextMessage() {
+	public async getTextMessage(): Promise<string> {
 		return await this.byId('popup-message').getText();
 	}
 
@@ -26,7 +26,7 @@ export class MessagePopup extends Widget {
 		return this.getButton('Close');
 	}
 
-	public async close() {
+	public async close(): Promise<void> {
 		await this.getButtonClose().click();
 	}
 
