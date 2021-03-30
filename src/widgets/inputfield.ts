@@ -2,7 +2,7 @@ import { Widget } from './widget';
 
 export class InputField extends Widget {
 
-	public async clear() {
+	public async clear(): Promise<void> {
 		await this.elem.clear();
 	}
 

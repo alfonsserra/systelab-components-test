@@ -21,7 +21,7 @@ export class Datepicker extends Widget {
 		return this.elem.element(by.css("input"));
 	}
 
-	private async clear(elem) {
+	private async clear(elem): Promise<void> {
 		const currentText=await this.getValue();
 		const len = currentText.length;
 		const backspaceSeries = Array(len + 1).join(Key.BACK_SPACE);

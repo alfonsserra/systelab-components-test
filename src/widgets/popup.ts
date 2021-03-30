@@ -8,7 +8,7 @@ export class Popup extends Widget {
 		return await this.elem.getText();
 	}
 
-	private getButton(text: string) {
+	private getButton(text: string): Button {
 		return new Button(this.elem
 			.element(by.tagName('systelab-dialog-bottom'))
 			.element(by.buttonText(text)));

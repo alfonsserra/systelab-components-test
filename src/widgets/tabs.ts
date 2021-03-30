@@ -12,7 +12,7 @@ export class Tabs extends Widget {
 		return new Tab(this.elem.all(by.tagName('li')).get(i));
 	}
 
-	public async selectTab(i: number) {
+	public async selectTab(i: number): Promise<void> {
 		await this.elem.all(by.tagName('li')).get(i).click();
 	}
 }

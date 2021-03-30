@@ -5,7 +5,7 @@ import { BasePage } from '../page-objects';
 
 export class TestAttributesService {
 
-	public static async check(container: Widget | BasePage) {
+	public static async check(container: Widget | BasePage): Promise<void> {
 		const methods: Array<string> = Object.getOwnPropertyNames(Object.getPrototypeOf(container));
 
 		for (let method of methods) {
@@ -27,7 +27,7 @@ export class TestAttributesService {
 		}
 	}
 
-	private static async checkButton(button: Button, enable: boolean, visible: boolean) {
+	private static async checkButton(button: Button, enable: boolean, visible: boolean): Promise<void> {
 		if (enable !== undefined) {
 			await expect(button.isEnabled())
 				.toEqual(enable);
@@ -38,7 +38,7 @@ export class TestAttributesService {
 		}
 	}
 
-	private static async checkInputField(input: InputField, enable: boolean, visible: boolean, label: boolean, mandatory: boolean, length: number) {
+	private static async checkInputField(input: InputField, enable: boolean, visible: boolean, label: boolean, mandatory: boolean, length: number): Promise<void> {
 		if (enable !== undefined) {
 			await expect(input.isEnabled())
 				.toEqual(enable);
@@ -70,7 +70,7 @@ export class TestAttributesService {
 		return widget instanceof InputField;
 	}
 
-	private static getRandomWord(length: number) {
+	private static getRandomWord(length: number): string {
 		let result = '';
 		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		const charactersLength = characters.length;

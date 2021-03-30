@@ -25,7 +25,7 @@ export const ATTRIBUTE_PREFIX = 'test:';
  * @returns {(target: any, propertyKey: string) => void}
  * @constructor
  */
-export function TestAttribute(attributes: IAttributeProperties) {
+export function TestAttribute(attributes: IAttributeProperties): any {
 	return (target: object, propertyKey: string) => {
 		if (attributes !== undefined && attributes !== null) {
 			Object.keys(attributes).forEach(key => {
