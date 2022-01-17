@@ -7,7 +7,7 @@ export interface ToggleSelectorOption {
 }
 
 export class ToggleSelector extends Widget {
-  private static idPrefix = 'id';
+  private static idPrefix: string = 'id';
 
   public async selectOptionByText(optionText: string): Promise<void> {
     await this.elem.element(by.cssContainingText('.slab-option', optionText)).click();
@@ -31,8 +31,8 @@ export class ToggleSelector extends Widget {
       const id: string = (await options.get(i).getAttribute('id')).slice(ToggleSelector.idPrefix.length);
       const caption: string = await options.get(i).getText();
       const option: ToggleSelectorOption = {
-        id: id,
         caption: caption,
+        id: id,
       };
       optionArray.push(option);
     }
